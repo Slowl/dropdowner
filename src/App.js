@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Router, Link } from "@reach/router";
+import styled from 'styled-components'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import Default from './components/Default'
+
+const NavContainer = styled.nav`
+  background-color: #1d1d1d;
+`
+const NavLink = styled(Link)`
+  display: inline-block;
+  padding: 1em;
+  color: #ffffff;
+  text-decoration: none;
+  outline: 0;
+`
+
+const App = () => {
+  return(
+    <div>
+      <NavContainer>
+        <NavLink to="/"> Default </NavLink>
+      </NavContainer>
+
+      <Router>
+        <Default path="/" />
+      </Router>
     </div>
-  );
+  )
 }
 
 export default App;
