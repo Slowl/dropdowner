@@ -3,6 +3,9 @@ import { Router, Link } from "@reach/router";
 import styled from 'styled-components'
 
 import Default from './components/Default'
+import Hovered from './components/Hovered'
+import Title from './components/Title'
+import Listing from './components/Listing'
 
 const NavContainer = styled.nav`
   background-color: #1d1d1d;
@@ -15,16 +18,28 @@ const NavLink = styled(Link)`
   outline: 0;
 `
 
+const RouterContainer = styled(Router)`
+  padding-top: 3em;
+  display: flex;
+  justify-content: center;
+`
+
 const App = () => {
   return(
     <div>
       <NavContainer>
         <NavLink to="/"> Default </NavLink>
+        <NavLink to="/hovered"> Hovered </NavLink>
+        <NavLink to="/title"> Title </NavLink>
+        <NavLink to="/listing"> Listing </NavLink>
       </NavContainer>
 
-      <Router>
+      <RouterContainer>
         <Default path="/" />
-      </Router>
+        <Hovered path="/hovered" />
+        <Title path="/title" />
+        <Listing path="/listing" />
+      </RouterContainer>
     </div>
   )
 }
