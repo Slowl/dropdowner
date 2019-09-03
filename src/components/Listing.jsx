@@ -96,8 +96,8 @@ class Listing extends React.Component {
   handleSelection = data => {
 
     this.setState((prevState) => {
-      const selectedIdUniq = [... new Set([...prevState.selectedId, ...[data.id]])]
-      const selectedNameUniq = [... new Set([...prevState.selectedName, ...[data.title]])]
+      const selectedIdUniq = [...new Set([...prevState.selectedId, ...[data.id]])]
+      const selectedNameUniq = [...new Set([...prevState.selectedName, ...[data.title]])]
       return { selectedId: selectedIdUniq, selectedName: selectedNameUniq }
    })
   }
