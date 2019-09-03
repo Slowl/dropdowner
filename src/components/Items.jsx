@@ -4,11 +4,11 @@ import Selected from './icons/Selected'
 
 const Item = styled.div`
   .title {
-    padding-left: 10px;
+    padding-left: 5px;
   }
 
   .selected {
-    padding-left: 10px;
+    padding-left: 5px;
     color: #00A6F0;
   }
 `
