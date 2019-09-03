@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Items from './Items'
 import CaretDown from './icons/CaretDown'
 
 const DropdownContainer = styled.div`
@@ -66,6 +67,8 @@ class Listing extends React.Component {
 
   state = {
     isOpen: false,
+    selectedId: [],
+    selectedName: [],
   }
 
   componentWillMount() {
@@ -86,18 +89,21 @@ class Listing extends React.Component {
     if (this.node.contains(e.target)) {
       return
     } else {
-        this.setState(state => ({
-          isOpen: false,
-          selected: "",
-        }))
+        this.setState({ isOpen: false })
       }
   }
 
   handleSelection = data => {
-    console.log(data)
+
+    this.setState((prevState) => {
+      const selectedIdUniq = [... new Set([...prevState.selectedId, ...[data.id]])]
+      const selectedNameUniq = [... new Set([...prevState.selectedName, ...[data.title]])]
+      return { selectedId: selectedIdUniq, selectedName: selectedNameUniq }
+   })
   }
 
   render(){
+    const { selectedName, selectedId, isOpen } = this.state
 
     const data = [
       {id:1, title: "Option 1"},
@@ -114,12 +120,15 @@ class Listing extends React.Component {
       <DropdownContainer ref={node => this.node = node}>
         <Header onClick={this.openDropdown}>
           <TitleContainer>
-            <span> {this.state.selected} </span> <CaretDown width="8px" height="5px" color="#111111" />
+            <span> {selectedName.length > 0 ? `... ${selectedName[selectedName.length - 1]}` : "Select"} </span>
+            <CaretDown width="8px" height="5px" color="#111111" />
           </TitleContainer>
         </Header>
-        <ListContainer isOpen={this.state.isOpen}>
+        <ListContainer isOpen={isOpen}>
           {data.map(items => (
-              <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}> {items.title} </ItemsContainer>
+              <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
+                <Items data={items} selectedId={selectedId} selectedName={selectedName} />
+              </ItemsContainer>
           )
         )}
         </ListContainer>
