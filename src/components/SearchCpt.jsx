@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Items from './Items'
+import SearchBox from './SearchBox'
+import Controls from './Controls'
 import CaretDown from './icons/CaretDown'
 
 const DropdownContainer = styled.div`
@@ -42,7 +44,7 @@ const TitleContainer = styled.div`
   }
 `
 
-const ListContainer = styled.div`
+const ParentListContainer = styled.div`
   display: ${props => props.isOpen ? "block" : "none"};
   background-color: #FFFFFF;
   box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.12);
@@ -53,7 +55,7 @@ const ListContainer = styled.div`
   top: -40px;
 `
 
-const ParentListContainer = styled.div`
+const ChildListContainer = styled.div`
   max-height: 250px;
   overflow-y: auto;
   -ms-overflow-style: none;
@@ -75,7 +77,7 @@ const ItemsContainer = styled.div`
 
 const DropdownFooter = styled.div`
   text-align: center;
-  padding: .2em;
+  padding: .2em 0;
 `
 
 class SearchCpt extends React.Component {
@@ -147,8 +149,10 @@ class SearchCpt extends React.Component {
             <CaretDown width="8px" height="5px" color="#111111" />
           </TitleContainer>
         </Header>
-          <ListContainer isOpen={isOpen} ref={node => this.node = node}>
-            <ParentListContainer>
+          <ParentListContainer isOpen={isOpen} ref={node => this.node = node}>
+            <SearchBox />
+            <Controls />
+            <ChildListContainer>
               {data.map(items => (
                   <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
                     <Items
@@ -158,9 +162,9 @@ class SearchCpt extends React.Component {
                   </ItemsContainer>
                 )
               )}
-            </ParentListContainer>
+            </ChildListContainer>
             <DropdownFooter><CaretDown width="10px" height="6px" color="#BDBDBD" /></DropdownFooter>
-          </ListContainer>
+          </ParentListContainer>
 
       </DropdownContainer>
     )
