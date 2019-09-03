@@ -6,6 +6,7 @@ import Default from './components/Default'
 import Hovered from './components/Hovered'
 import Title from './components/Title'
 import Listing from './components/Listing'
+import SearchCpt from './components/SearchCpt'
 
 const NavContainer = styled.nav`
   background-color: #1d1d1d;
@@ -32,6 +33,7 @@ const App = () => {
         <NavLink to="/hovered"> Hovered </NavLink>
         <NavLink to="/title"> Title </NavLink>
         <NavLink to="/listing"> Listing </NavLink>
+        <NavLink to="/search"> Search </NavLink>
       </NavContainer>
 
       <RouterContainer>
@@ -39,6 +41,7 @@ const App = () => {
         <Hovered path="/hovered" />
         <Title path="/title" />
         <Listing path="/listing" />
+        <SearchCpt path="/search" />
       </RouterContainer>
     </div>
   )
