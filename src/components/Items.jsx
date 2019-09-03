@@ -5,7 +5,6 @@ import Selected from './icons/Selected'
 const Item = styled.div`
   .title {
     padding-left: 10px;
-    transition: .3s;
   }
 
   .selected {

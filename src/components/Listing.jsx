@@ -117,14 +117,14 @@ class Listing extends React.Component {
     ]
 
     return (
-      <DropdownContainer ref={node => this.node = node}>
+      <DropdownContainer>
         <Header onClick={this.openDropdown}>
           <TitleContainer>
             <span> {selectedName.length > 0 ? `... ${selectedName[selectedName.length - 1]}` : "Select"} </span>
             <CaretDown width="8px" height="5px" color="#111111" />
           </TitleContainer>
         </Header>
-        <ListContainer isOpen={isOpen}>
+        <ListContainer isOpen={isOpen} ref={node => this.node = node}>
           {data.map(items => (
               <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
                 <Items data={items} selectedId={selectedId} selectedName={selectedName} />
