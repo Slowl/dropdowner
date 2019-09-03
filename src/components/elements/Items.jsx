@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Selected from './icons/Selected'
+import Selected from '../icons/Selected'
 
 const Item = styled.div`
   .title {

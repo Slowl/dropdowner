@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Items from './Items'
+import Items from './elements/Items'
 import CaretDown from './icons/CaretDown'
 
 const DropdownContainer = styled.div`
