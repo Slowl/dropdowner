@@ -5,7 +5,7 @@ const Selected = props => {
     <svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>D89EE7EE-5494-431B-8879-F03A34DF525D</title>
         <desc>Created with sketchtool.</desc>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <g id="Dropdown" transform="translate(-187.000000, -375.000000)" fill="#00A6F0">
                 <g id="Group" transform="translate(177.000000, 329.000000)">
                     <g id="Group-2" transform="translate(10.000000, 13.000000)">
