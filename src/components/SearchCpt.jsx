@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Items from './Items'
-import SearchBox from './SearchBox'
-import Controls from './Controls'
+import Items from './elements/Items'
+import SearchBox from './elements/SearchBox'
+import Controls from './elements/Controls'
 import CaretDown from './icons/CaretDown'
 
 const DropdownContainer = styled.div`
@@ -86,6 +86,7 @@ class SearchCpt extends React.Component {
     isOpen: false,
     selectedId: [],
     selectedName: [],
+    inputValue: "",
   }
 
   componentWillMount() {
@@ -119,8 +120,13 @@ class SearchCpt extends React.Component {
    })
   }
 
+  handleInputChange = e => {
+    const value = e.target.value
+    this.setState({ inputValue: value})
+  }
+
   render(){
-    const { selectedName, selectedId, isOpen } = this.state
+    const { selectedName, selectedId, isOpen, inputValue } = this.state
 
     const data = [
       {id:1, title: "Option 1"},
@@ -141,6 +147,15 @@ class SearchCpt extends React.Component {
       {id:16, title: "Option 16"},
     ]
 
+    let filteredData = data
+    if (inputValue.length > 0) {
+      filteredData = data.filter(letter => {
+        const formatedInputValue = inputValue.toLowerCase().trim()
+        const formatedDataTitle = letter.title.toLowerCase().trim()
+        return formatedDataTitle.match(formatedInputValue);
+      });
+    }
+
     return (
       <DropdownContainer>
         <Header onClick={this.openDropdown}>
@@ -150,10 +165,10 @@ class SearchCpt extends React.Component {
           </TitleContainer>
         </Header>
           <ParentListContainer isOpen={isOpen} ref={node => this.node = node}>
-            <SearchBox />
+            <SearchBox onChange={this.handleInputChange} />
             <Controls />
             <ChildListContainer>
-              {data.map(items => (
+              {filteredData.map(items => (
                   <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
                     <Items
                       data={items}
