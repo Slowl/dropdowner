@@ -152,7 +152,7 @@ class SearchCpt extends React.Component {
     const allElemsId = []
     const allElemsName = []
 
-    datas.map(elem => {
+    datas.forEach(elem => {
       allElemsId.push(elem.id)
       allElemsName.push(elem.title)
     })
