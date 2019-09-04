@@ -6,7 +6,7 @@ import Controls from './elements/Controls'
 import CaretDown from './icons/CaretDown'
 
 const DropdownContainer = styled.div`
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap');
   font-family: 'Roboto', sans-serif;
 `
 
@@ -80,6 +80,13 @@ const DropdownFooter = styled.div`
   padding: .2em 0;
 `
 
+const EmptySearch = styled.div`
+  color: #111111;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 1em;
+`
+
 class SearchCpt extends React.Component {
 
   state = {
@@ -87,7 +94,17 @@ class SearchCpt extends React.Component {
     selectedId: [],
     selectedName: [],
     inputValue: "",
+    childListHeight: NaN,
   }
+
+  componentDidMount() {
+   this.getChildListHeight();
+ }
+
+ componentDidUpdate() {
+   this.getChildListHeight();
+   console.log(this.state.childListHeight)
+ }
 
   componentWillMount() {
     document.addEventListener('mousedown', this.closeDropdown, false)
@@ -125,8 +142,16 @@ class SearchCpt extends React.Component {
     this.setState({ inputValue: value})
   }
 
+  getChildListHeight() {
+    if (this.childListHeight && (this.state.childListHeight !== this.childListHeight.clientHeight)) {
+      this.setState({ childListHeight: this.childListHeight.clientHeight })
+    } else if (this.childListHeight === null && (this.state.childListHeight !== 0)) {
+      this.setState({ childListHeight: 0 })
+    }
+  }
+
   render(){
-    const { selectedName, selectedId, isOpen, inputValue } = this.state
+    const { selectedName, selectedId, isOpen, inputValue, childListHeight } = this.state
 
     const data = [
       {id:1, title: "Option 1"},
@@ -166,19 +191,28 @@ class SearchCpt extends React.Component {
         </Header>
           <ParentListContainer isOpen={isOpen} ref={node => this.node = node}>
             <SearchBox onChange={this.handleInputChange} />
-            <Controls />
-            <ChildListContainer>
-              {filteredData.map(items => (
-                  <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
-                    <Items
-                      data={items}
-                      selectedId={selectedId}
-                      selectedName={selectedName} />
-                  </ItemsContainer>
-                )
-              )}
-            </ChildListContainer>
-            <DropdownFooter><CaretDown width="10px" height="6px" color="#BDBDBD" /></DropdownFooter>
+
+            {filteredData.length > 0 ? (
+              <div>
+                <Controls />
+                <ChildListContainer ref={childListHeight => this.childListHeight = childListHeight}>
+                  {filteredData.map(items => (
+                      <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
+                        <Items
+                          data={items}
+                          selectedId={selectedId}
+                          selectedName={selectedName} />
+                      </ItemsContainer>
+                    )
+                  )}
+                </ChildListContainer>
+              </div>
+            ): (
+              <EmptySearch> Aucun résultat </EmptySearch>
+            )}
+
+            {childListHeight >= 250 && <DropdownFooter><CaretDown width="10px" height="6px" color="#BDBDBD" /></DropdownFooter>}
+
           </ParentListContainer>
 
       </DropdownContainer>
