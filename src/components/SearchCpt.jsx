@@ -98,13 +98,12 @@ class SearchCpt extends React.Component {
   }
 
   componentDidMount() {
-   this.getChildListHeight();
- }
+    this.getChildListHeight()
+  }
 
- componentDidUpdate() {
-   this.getChildListHeight();
-   console.log(this.state.childListHeight)
- }
+  componentDidUpdate() {
+    this.getChildListHeight()
+  }
 
   componentWillMount() {
     document.addEventListener('mousedown', this.closeDropdown, false)
@@ -129,7 +128,6 @@ class SearchCpt extends React.Component {
   }
 
   handleSelection = data => {
-
     this.setState((prevState) => {
       const selectedIdUniq = [...new Set([...prevState.selectedId, ...[data.id]])]
       const selectedNameUniq = [...new Set([...prevState.selectedName, ...[data.title]])]
@@ -142,12 +140,28 @@ class SearchCpt extends React.Component {
     this.setState({ inputValue: value})
   }
 
-  getChildListHeight() {
+  getChildListHeight = () => {
     if (this.childListHeight && (this.state.childListHeight !== this.childListHeight.clientHeight)) {
       this.setState({ childListHeight: this.childListHeight.clientHeight })
     } else if (this.childListHeight === null && (this.state.childListHeight !== 0)) {
       this.setState({ childListHeight: 0 })
     }
+  }
+
+  selectAll = datas => {
+    const allElemsId = []
+    const allElemsName = []
+
+    datas.map(elem => {
+      allElemsId.push(elem.id)
+      allElemsName.push(elem.title)
+    })
+
+    this.setState({ selectedId : allElemsId, selectedName: allElemsName })
+  }
+
+  clearAll = () => {
+    this.setState({ selectedId : [], selectedName: [] })
   }
 
   render(){
@@ -178,7 +192,7 @@ class SearchCpt extends React.Component {
         const formatedInputValue = inputValue.toLowerCase().trim()
         const formatedDataTitle = letter.title.toLowerCase().trim()
         return formatedDataTitle.match(formatedInputValue);
-      });
+      })
     }
 
     return (
@@ -194,7 +208,7 @@ class SearchCpt extends React.Component {
 
             {filteredData.length > 0 ? (
               <div>
-                <Controls />
+                <Controls select={() => this.selectAll(filteredData)} clear={this.clearAll}/>
                 <ChildListContainer ref={childListHeight => this.childListHeight = childListHeight}>
                   {filteredData.map(items => (
                       <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>

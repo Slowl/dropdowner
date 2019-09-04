@@ -23,11 +23,11 @@ const Button = styled.span`
   }
 `
 
-const Controls = () => {
+const Controls = ({ select, clear }) => {
   return (
     <ControlsContainer>
-      <Button>Select all</Button>
-      <Button>Clear all</Button>
+      <Button onClick={select}> Select all</Button>
+      <Button onClick={clear}> Clear all</Button>
     </ControlsContainer>
 
   )
