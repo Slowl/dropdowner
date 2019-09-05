@@ -11,6 +11,9 @@ const Item = styled.div`
     padding-left: 5px;
     color: #00A6F0;
   }
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
 `
 
 const Placeholder = styled.span`

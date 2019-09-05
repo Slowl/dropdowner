@@ -105,17 +105,6 @@ class Listing extends React.Component {
   render(){
     const { selectedName, selectedId, isOpen } = this.state
 
-    const data = [
-      {id:1, title: "Option 1"},
-      {id:2, title: "Option 2"},
-      {id:3, title: "Option 3"},
-      {id:4, title: "Option 4"},
-      {id:5, title: "Option 5"},
-      {id:6, title: "Option 6"},
-      {id:7, title: "Option 7"},
-      {id:8, title: "Option 8"},
-    ]
-
     return (
       <DropdownContainer>
         <Header onClick={this.openDropdown}>
@@ -125,7 +114,7 @@ class Listing extends React.Component {
           </TitleContainer>
         </Header>
         <ListContainer isOpen={isOpen} ref={node => this.node = node}>
-          {data.map(items => (
+          {this.props.data.map(items => (
               <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
                 <Items data={items} selectedId={selectedId} selectedName={selectedName} />
               </ItemsContainer>
