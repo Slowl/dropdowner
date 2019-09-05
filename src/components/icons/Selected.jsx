@@ -2,7 +2,7 @@ import React from "react"
 
 const Selected = props => {
   return (
-    <svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg width={props.width} height={props.height} viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>D89EE7EE-5494-431B-8879-F03A34DF525D</title>
         <desc>Created with sketchtool.</desc>
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

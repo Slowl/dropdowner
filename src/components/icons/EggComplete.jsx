@@ -2,7 +2,7 @@ import React from "react"
 
 const EggComplete = props => {
   return (
-    <svg width="28px" height="32px" viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg width={props.width} height={props.height} viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>F16AC6EE-87D5-4ED1-B3BE-2D07C3275672</title>
         <desc>Created with sketchtool.</desc>
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

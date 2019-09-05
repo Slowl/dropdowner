@@ -2,7 +2,7 @@ import React from "react"
 
 const Egg = props => {
   return (
-    <svg width="28px" height="32px" viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg width={props.width} height={props.height} viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>41880A2E-D5B7-42F4-AB80-F450D0D3B5BF</title>
         <desc>Created with sketchtool.</desc>
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

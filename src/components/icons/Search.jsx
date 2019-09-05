@@ -2,7 +2,7 @@ import React from "react"
 
 const Search = props => {
   return (
-    <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg width={props.width} height={props.height} viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>631F8856-2F60-4E27-840B-8A5D35D3C426</title>
         <desc>Created with sketchtool.</desc>
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
