@@ -33,7 +33,6 @@ class App extends React.Component {
   state = {
     data: '',
     projects: '',
-
   }
 
   componentDidMount(){
@@ -47,7 +46,8 @@ class App extends React.Component {
   }
 
   dispatchRequest = e => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+
     if (bottom) {
       fetch(`https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects${this.state.data.meta.next}`)
         .then(res => {

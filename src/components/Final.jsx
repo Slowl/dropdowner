@@ -52,7 +52,7 @@ const ParentListContainer = styled.div`
   min-width: 20em;
   max-width: 25em;
   position: relative;
-  padding: .5em .5em 0;
+  padding: 1em 1em 0;
   top: -40px;
 `
 
@@ -222,7 +222,6 @@ class Final extends React.Component {
             {childListHeight >= 350 && <DropdownFooter><CaretDown width="10px" height="6px" color="#BDBDBD" /></DropdownFooter>}
 
           </ParentListContainer>
-
       </DropdownContainer>
     )
   }
