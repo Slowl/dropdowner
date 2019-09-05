@@ -32,17 +32,34 @@ class App extends React.Component {
 
   state = {
     data: '',
+    projects: '',
+
   }
 
   componentDidMount(){
-    fetch("https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects?lang=fr")
+    fetch("https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects?lang=fr&limit=16")
       .then(res => {
         return res.json()
       }
     ).then(data => {
-      this.setState({ data: data.projects })
-      console.log(this.state.data)
+      this.setState({ data: data, projects: data.projects })
     })
+  }
+
+  dispatchRequest = e => {
+    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (bottom) {
+      fetch(`https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects${this.state.data.meta.next}`)
+        .then(res => {
+          return res.json()
+        }
+      ).then(data => {
+        this.setState(prevState => ({
+          data: data,
+          projects: [...prevState.projects, ...data.projects]
+        }))
+      })
+    }
   }
 
   render(){
@@ -82,7 +99,7 @@ class App extends React.Component {
           <Title path="/title" />
           <Listing path="/listing" data={dataOld} />
           <SearchCpt path="/search" data={dataOld} />
-          <Final path="/final" data={this.state.data}/>
+          <Final path="/final" data={this.state.projects} request={this.dispatchRequest}/>
         </RouterContainer>
       </div>
     )

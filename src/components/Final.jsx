@@ -194,7 +194,7 @@ class Final extends React.Component {
             {filteredData && filteredData.length > 0 ? (
               <div>
                 <Controls select={() => this.selectAll(filteredData)} clear={this.clearAll}/>
-                <ChildListContainer ref={childListHeight => this.childListHeight = childListHeight}>
+                <ChildListContainer ref={childListHeight => this.childListHeight = childListHeight} onScroll={this.props.request}>
                   {filteredData.map(items => (
                       <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
                         <Cards
