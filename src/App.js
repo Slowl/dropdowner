@@ -8,6 +8,7 @@ import Title from './components/Title'
 import Listing from './components/Listing'
 import SearchCpt from './components/SearchCpt'
 import Final from './components/Final'
+import FinalIsolated from './components/FinalIsolated'
 
 const NavContainer = styled.nav`
   background-color: #1d1d1d;
@@ -23,7 +24,7 @@ const NavLink = styled(Link)`
 `
 
 const RouterContainer = styled(Router)`
-  padding-top: em;
+  padding-top: 1em;
   display: flex;
   justify-content: center;
 `
@@ -33,6 +34,7 @@ class App extends React.Component {
   state = {
     data: '',
     projects: '',
+    customStructure: [],
   }
 
   componentDidMount(){
@@ -41,7 +43,26 @@ class App extends React.Component {
         return res.json()
       }
     ).then(data => {
-      this.setState({ data: data, projects: data.projects })
+      data.projects.forEach(item => {
+        this.setState(prevState => ({
+          customStructure: [
+            ...prevState.customStructure,
+            {
+              id:item.id,
+              title: item.name_fr,
+              description:item.subtitle_fr,
+              image:item.main_image.versions.small.url,
+              goal:item.goal,
+              reached: item.amount_raised,
+              nb_products_sold: item.nb_products_sold,
+              currency: item.currency_display,
+              type: item.type
+            }
+            ],
+            data: data,
+            projects: data.projects,
+        }))
+      })
     })
   }
 
@@ -54,10 +75,25 @@ class App extends React.Component {
           return res.json()
         }
       ).then(data => {
-        this.setState(prevState => ({
-          data: data,
-          projects: [...prevState.projects, ...data.projects]
-        }))
+        data.projects.forEach(item => {
+          this.setState(prevState => ({
+            customStructure: [
+              ...prevState.customStructure,
+              {
+                id:item.id,
+                title: item.name_fr,
+                description:item.subtitle_fr,
+                image:item.main_image.versions.small.url,
+                goal:item.goal,
+                reached: item.amount_raised,
+                nb_products_sold: item.nb_products_sold,
+                currency: item.currency_display,
+                type: item.type
+              }
+              ],
+            data: data, projects: [...prevState.projects, ...data.projects]
+          }))
+        })
       })
     }
   }
@@ -91,6 +127,7 @@ class App extends React.Component {
           <NavLink to="/listing"> Listing </NavLink>
           <NavLink to="/search"> Search </NavLink>
           <NavLink to="/final"> Final </NavLink>
+          <NavLink to="/final-isolated"> Final Isolated ? </NavLink>
         </NavContainer>
 
         <RouterContainer>
@@ -100,6 +137,8 @@ class App extends React.Component {
           <Listing path="/listing" data={dataOld} />
           <SearchCpt path="/search" data={dataOld} />
           <Final path="/final" data={this.state.projects} request={this.dispatchRequest}/>
+          <FinalIsolated path="/final-isolated" data={this.state.customStructure} request={this.dispatchRequest}
+          />
         </RouterContainer>
       </div>
     )
