@@ -60,11 +60,6 @@ const ParentListContainer = styled.div`
 const ChildListContainer = styled.div`
   max-height: 350px;
   overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  :-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const ItemsContainer = styled.div`
