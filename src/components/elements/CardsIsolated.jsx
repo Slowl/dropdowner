@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Selected from '../icons/Selected'
+import PropTypes from 'prop-types'
 
+import Selected from '../icons/Selected'
 import EggEmpty from '../icons/EggEmpty'
 import EggLow from '../icons/EggLow'
 import EggMid from '../icons/EggMid'
@@ -75,7 +76,7 @@ const InformationContainer = styled.div`
   }
 `
 
-const CardsIsolated = ({ id, title, selectedId, selectedName, image, description, goal, reached, nb_product_sold, currency, type }) => {
+const CardsIsolated = ({ id, title, selectedId, selectedName, imageUrl, description, goal, reached, nb_product_sold, currency, type }) => {
 
   const percentPriceReached = Math.round((reached / goal) * 100)
   const percentSoldReached = Math.round((nb_product_sold / goal) * 100)
@@ -101,7 +102,7 @@ const CardsIsolated = ({ id, title, selectedId, selectedName, image, description
       <Card>
         <ImgContainer>
           <span className="selected-container">{selectedId.includes(id) ? <Selected width="10px" height="10px"/> : <Placeholder />}</span>
-          <img src={image} alt='project banner'/>
+          <img src={imageUrl} alt='project banner'/>
         </ImgContainer>
         <InformationContainer>
           <span className="title"> {title} </span>
@@ -112,11 +113,23 @@ const CardsIsolated = ({ id, title, selectedId, selectedName, image, description
             {type === 2 && currency}
           </div>
         </InformationContainer>
-
-
       </Card>
     </CardsContainer>
   )
+}
+
+CardsIsolated.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  selectedId: PropTypes.array,
+  selectedName: PropTypes.array,
+  imageUrl: PropTypes.string,
+  description: PropTypes.string,
+  goal: PropTypes.number,
+  reached: PropTypes.number,
+  nb_product_sold: PropTypes.number,
+  currency: PropTypes.string,
+  type: PropTypes.oneOf([ 1, 2 ])
 }
 
 export default CardsIsolated

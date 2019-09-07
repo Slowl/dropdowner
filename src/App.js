@@ -37,32 +37,37 @@ class App extends React.Component {
     customStructure: [],
   }
 
+  dataTransform = ( dataToTransform ) => {
+    const projects = dataToTransform.projects
+    projects.forEach(item => {
+      this.setState(prevState => ({
+        customStructure: [
+          ...prevState.customStructure,
+          {
+            id:item.id,
+            title: item.name_fr,
+            description:item.subtitle_fr,
+            image:item.main_image.versions.small.url,
+            goal:item.goal,
+            reached: item.amount_raised,
+            nb_products_sold: item.nb_products_sold,
+            currency: item.currency_display,
+            type: item.type
+          }
+          ],
+          data: dataToTransform, projects: [...prevState.projects, ...projects] // state.projects used for the first Final component
+      }))
+    })
+  }
+
   componentDidMount(){
     fetch("https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects?lang=fr&limit=16")
       .then(res => {
         return res.json()
       }
     ).then(data => {
-      data.projects.forEach(item => {
-        this.setState(prevState => ({
-          customStructure: [
-            ...prevState.customStructure,
-            {
-              id:item.id,
-              title: item.name_fr,
-              description:item.subtitle_fr,
-              image:item.main_image.versions.small.url,
-              goal:item.goal,
-              reached: item.amount_raised,
-              nb_products_sold: item.nb_products_sold,
-              currency: item.currency_display,
-              type: item.type
-            }
-            ],
-            data: data,
-            projects: data.projects,
-        }))
-      })
+      this.setState({data: data})
+      this.dataTransform(data)
     })
   }
 
@@ -75,25 +80,7 @@ class App extends React.Component {
           return res.json()
         }
       ).then(data => {
-        data.projects.forEach(item => {
-          this.setState(prevState => ({
-            customStructure: [
-              ...prevState.customStructure,
-              {
-                id:item.id,
-                title: item.name_fr,
-                description:item.subtitle_fr,
-                image:item.main_image.versions.small.url,
-                goal:item.goal,
-                reached: item.amount_raised,
-                nb_products_sold: item.nb_products_sold,
-                currency: item.currency_display,
-                type: item.type
-              }
-              ],
-            data: data, projects: [...prevState.projects, ...data.projects]
-          }))
-        })
+        this.dataTransform(data)
       })
     }
   }
@@ -137,12 +124,15 @@ class App extends React.Component {
           <Listing path="/listing" data={dataOld} />
           <SearchCpt path="/search" data={dataOld} />
           <Final path="/final" data={this.state.projects} request={this.dispatchRequest}/>
-          <FinalIsolated path="/final-isolated" data={this.state.customStructure} request={this.dispatchRequest}
-          />
+          <FinalIsolated
+            path="/final-isolated"
+            data={this.state.customStructure}
+            request={this.dispatchRequest}
+           />
         </RouterContainer>
       </div>
     )
   }
 }
 
-export default App;
+export default App

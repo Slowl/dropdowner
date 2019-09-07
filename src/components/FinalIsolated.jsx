@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import CardsIsolated from './elements/CardsIsolated'
 import SearchBox from './elements/SearchBox'
 import Controls from './elements/Controls'
@@ -91,7 +92,7 @@ const EmptySearch = styled.div`
   padding: 1em;
 `
 
-class FinalGood extends React.Component {
+class FinalIsolated extends React.Component {
 
   state = {
     isOpen: false,
@@ -133,8 +134,8 @@ class FinalGood extends React.Component {
 
   handleSelection = data => {
     this.setState((prevState) => {
-      const selectedIdUniq = [...new Set([...prevState.selectedId, ...[data.id]])] // there
-      const selectedNameUniq = [...new Set([...prevState.selectedName, ...[data.title]])] // there
+      const selectedIdUniq = [...new Set([...prevState.selectedId, ...[data.id]])]
+      const selectedNameUniq = [...new Set([...prevState.selectedName, ...[data.title]])]
       return { selectedId: selectedIdUniq, selectedName: selectedNameUniq }
    })
   }
@@ -157,8 +158,8 @@ class FinalGood extends React.Component {
     const allElemsName = []
 
     datas.forEach(elem => {
-      allElemsId.push(elem.id) // there
-      allElemsName.push(elem.title) // there
+      allElemsId.push(elem.id)
+      allElemsName.push(elem.title)
     })
 
     this.setState({ selectedId : allElemsId, selectedName: allElemsName })
@@ -176,7 +177,7 @@ class FinalGood extends React.Component {
     if (inputValue.length > 0) {
       filteredData = this.props.data.filter(letter => {
         const formatedInputValue = inputValue.toLowerCase().trim()
-        const formatedDataTitle = letter.title.toLowerCase().trim() // there
+        const formatedDataTitle = letter.title.toLowerCase().trim()
         return formatedDataTitle.match(formatedInputValue);
       })
     }
@@ -203,7 +204,7 @@ class FinalGood extends React.Component {
                           id={items.id}
                           title={items.title}
                           description={items.description}
-                          image={items.image}
+                          imageUrl={items.image}
                           goal={items.goal}
                           reached={items.reached}
                           nb_product_sold={items.nb_products_sold}
@@ -227,4 +228,9 @@ class FinalGood extends React.Component {
   }
 }
 
-export default FinalGood
+FinalIsolated.propTypes = {
+  data: PropTypes.array.isRequired,
+  request: PropTypes.func,
+}
+
+export default FinalIsolated
