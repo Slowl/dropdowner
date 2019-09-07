@@ -166,6 +166,7 @@ class FinalIsolated extends React.Component {
     } else if (this.childListHeight === null && (this.state.childListHeight !== 0)) {
       this.setState({ childListHeight: 0 })
     }
+    console.log(this.state.childListHeight)
   }
 
   selectAll = datas => {
