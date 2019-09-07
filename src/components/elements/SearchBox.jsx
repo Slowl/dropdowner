@@ -15,9 +15,11 @@ const SearchInput = styled.input`
   width: 100%;
   padding: 1em 1em 1em .5em;
   border:0;
+  outline: 0;
 
   ::placeholder {
     color: #999999;
+    font-size: 14px;
   }
 `
 

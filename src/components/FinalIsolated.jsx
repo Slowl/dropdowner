@@ -60,6 +60,8 @@ const ParentListContainer = styled.div`
 const ChildListContainer = styled.div`
   max-height: 350px;
   overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `
 
 const ItemsContainer = styled.div`
@@ -166,7 +168,6 @@ class FinalIsolated extends React.Component {
     } else if (this.childListHeight === null && (this.state.childListHeight !== 0)) {
       this.setState({ childListHeight: 0 })
     }
-    console.log(this.state.childListHeight)
   }
 
   selectAll = datas => {
