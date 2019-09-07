@@ -54,7 +54,7 @@ const ParentListContainer = styled.div`
   max-width: 25em;
   position: relative;
   padding: 1em 1em 0;
-  top: -40px;
+  top: -50px;
 `
 
 const ChildListContainer = styled.div`

@@ -23,7 +23,7 @@ const NavLink = styled(Link)`
 `
 
 const RouterContainer = styled(Router)`
-  padding-top: 1em;
+  padding-top: 3em;
   display: flex;
   justify-content: center;
 `
