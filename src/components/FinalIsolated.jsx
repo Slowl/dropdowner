@@ -50,7 +50,7 @@ const ParentListContainer = styled.div`
   display: ${props => props.isOpen ? "block" : "none"};
   background-color: #FFFFFF;
   box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.12);
-  min-width: 20em;
+  min-width: 25em;
   max-width: 25em;
   position: relative;
   padding: 1em 1em 0;
@@ -153,7 +153,7 @@ class FinalIsolated extends React.Component {
   }
 
   handleSelection = data => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       const selectedIdUniq = [...new Set([...prevState.selectedId, ...[data.id]])]
       const selectedNameUniq = [...new Set([...prevState.selectedName, ...[data.title]])]
       return { selectedId: selectedIdUniq, selectedName: selectedNameUniq }
@@ -193,12 +193,12 @@ class FinalIsolated extends React.Component {
     const { selectedName, selectedId, isOpen, inputValue, childListHeight } = this.state
     const { request, data, loading } = this.props
 
-    let filteredData = this.props.data
+    let filteredData = data
     if (inputValue.length > 0) {
       filteredData = data.filter(letter => {
         const formatedInputValue = inputValue.toLowerCase().trim()
         const formatedDataTitle = letter.title.toLowerCase().trim()
-        return formatedDataTitle.match(formatedInputValue);
+        return formatedDataTitle.match(formatedInputValue)
       })
     }
     return (

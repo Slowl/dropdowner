@@ -7,7 +7,6 @@ import Hovered from './components/Hovered'
 import Title from './components/Title'
 import Listing from './components/Listing'
 import SearchCpt from './components/SearchCpt'
-import Final from './components/Final'
 import FinalIsolated from './components/FinalIsolated'
 
 const NavContainer = styled.nav`
@@ -62,15 +61,11 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    this.setState(prevState => ({ loading: !prevState.loading}))
     fetch("https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects?lang=fr&limit=16")
-      .then(res => {
-        return res.json()
-      }
-    ).then(data => {
-      this.setState(prevState => ({ loading: !prevState.loading}))
-      this.setState({data: data})
-      this.dataTransform(data)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({data: data})
+        this.dataTransform(data)
     })
   }
 
@@ -80,12 +75,10 @@ class App extends React.Component {
     if (bottom) {
       this.setState(prevState => ({ loading: !prevState.loading}))
       fetch(`https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects${this.state.data.meta.next}`)
-        .then(res => {
-          return res.json()
-        }
-      ).then(data => {
-        this.setState(prevState => ({ loading: !prevState.loading}))
-        this.dataTransform(data)
+        .then(res => res.json())
+        .then(data => {
+          this.setState(prevState => ({ loading: !prevState.loading}))
+          this.dataTransform(data)
       })
     }
   }
@@ -118,8 +111,7 @@ class App extends React.Component {
           <NavLink to="/title"> Title </NavLink>
           <NavLink to="/listing"> Listing </NavLink>
           <NavLink to="/search"> Search </NavLink>
-          <NavLink to="/final"> Final </NavLink>
-          <NavLink to="/final-isolated"> Final Isolated ? </NavLink>
+          <NavLink to="/final-isolated"> Final </NavLink>
         </NavContainer>
 
         <RouterContainer>
@@ -128,7 +120,6 @@ class App extends React.Component {
           <Title path="/title" />
           <Listing path="/listing" data={dataOld} />
           <SearchCpt path="/search" data={dataOld} />
-          <Final path="/final" data={this.state.projects} request={this.dispatchRequest}/>
           <FinalIsolated
             path="/final-isolated"
             data={this.state.customStructure}
