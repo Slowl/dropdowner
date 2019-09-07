@@ -82,7 +82,7 @@ const ItemsContainer = styled.div`
 
 const DropdownFooter = styled.div`
   text-align: center;
-  padding: .2em 0;
+  padding-bottom: .2em;
 `
 
 const EmptySearch = styled.div`
@@ -90,6 +90,26 @@ const EmptySearch = styled.div`
   font-size: 15px;
   font-weight: 300;
   padding: 1em;
+`
+
+const Loader = styled.div`
+  :after {
+    display: block;
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50px;
+    margin: auto;
+    background-color: #00A6F0;
+    transition: all .3s;
+    opacity: ${props => props.isLoading ? "1" : "0"};
+    animation: ${props => props.isLoading && ".3s linear 0s infinite alternate loader"};
+
+    @keyframes loader {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  }
 `
 
 class FinalIsolated extends React.Component {
@@ -171,11 +191,11 @@ class FinalIsolated extends React.Component {
 
   render(){
     const { selectedName, selectedId, isOpen, inputValue, childListHeight } = this.state
-    const { request } = this.props
+    const { request, data, loading } = this.props
 
     let filteredData = this.props.data
     if (inputValue.length > 0) {
-      filteredData = this.props.data.filter(letter => {
+      filteredData = data.filter(letter => {
         const formatedInputValue = inputValue.toLowerCase().trim()
         const formatedDataTitle = letter.title.toLowerCase().trim()
         return formatedDataTitle.match(formatedInputValue);
@@ -195,26 +215,27 @@ class FinalIsolated extends React.Component {
             {filteredData && filteredData.length > 0 ? (
               <div>
                 <Controls select={() => this.selectAll(filteredData)} clear={this.clearAll}/>
-                <ChildListContainer ref={childListHeight => this.childListHeight = childListHeight} onScroll={request}>
-                  {filteredData.map(items => (
-                      <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
-                        <CardsIsolated
-                          selectedId={selectedId}
-                          selectedName={selectedName}
-                          id={items.id}
-                          title={items.title}
-                          description={items.description}
-                          imageUrl={items.image}
-                          goal={items.goal}
-                          reached={items.reached}
-                          nb_product_sold={items.nb_products_sold}
-                          currency={items.currency}
-                          type={items.type}
-                        />
-                      </ItemsContainer>
-                    )
-                  )}
-                </ChildListContainer>
+                  <ChildListContainer ref={childListHeight => this.childListHeight = childListHeight} onScroll={request}>
+                    {filteredData.map(items => (
+                        <ItemsContainer onClick={() => this.handleSelection(items)} key={items.id}>
+                          <CardsIsolated
+                            selectedId={selectedId}
+                            selectedName={selectedName}
+                            id={items.id}
+                            title={items.title}
+                            description={items.description}
+                            imageUrl={items.image}
+                            goal={items.goal}
+                            reached={items.reached}
+                            nb_product_sold={items.nb_products_sold}
+                            currency={items.currency}
+                            type={items.type}
+                          />
+                        </ItemsContainer>
+                      )
+                    )}
+                  </ChildListContainer>
+                <Loader isLoading={loading} />
               </div>
             ): (
               <EmptySearch> Aucun résultat </EmptySearch>
@@ -231,6 +252,7 @@ class FinalIsolated extends React.Component {
 FinalIsolated.propTypes = {
   data: PropTypes.array.isRequired,
   request: PropTypes.func,
+  loading: PropTypes.bool,
 }
 
 export default FinalIsolated

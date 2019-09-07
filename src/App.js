@@ -35,6 +35,7 @@ class App extends React.Component {
     data: '',
     projects: '',
     customStructure: [],
+    loading: false,
   }
 
   dataTransform = ( dataToTransform ) => {
@@ -61,11 +62,13 @@ class App extends React.Component {
   }
 
   componentDidMount(){
+    this.setState(prevState => ({ loading: !prevState.loading}))
     fetch("https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects?lang=fr&limit=16")
       .then(res => {
         return res.json()
       }
     ).then(data => {
+      this.setState(prevState => ({ loading: !prevState.loading}))
       this.setState({data: data})
       this.dataTransform(data)
     })
@@ -75,11 +78,13 @@ class App extends React.Component {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
 
     if (bottom) {
+      this.setState(prevState => ({ loading: !prevState.loading}))
       fetch(`https://cors-anywhere.herokuapp.com/https://api.ulule.com/v1/search/projects${this.state.data.meta.next}`)
         .then(res => {
           return res.json()
         }
       ).then(data => {
+        this.setState(prevState => ({ loading: !prevState.loading}))
         this.dataTransform(data)
       })
     }
@@ -128,6 +133,7 @@ class App extends React.Component {
             path="/final-isolated"
             data={this.state.customStructure}
             request={this.dispatchRequest}
+            loading={this.state.loading}
            />
         </RouterContainer>
       </div>
